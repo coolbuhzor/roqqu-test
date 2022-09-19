@@ -123,31 +123,31 @@ const Exchange = () => {
             </div>
           </div>
         </section>
-        <section className="w-[350px] h-[514px] pb-[100px] rounded-[5px] bg-[#080F24] px-[10px] pt-[14px] overflow-y-scroll">
+        <section className="w-[350px] h-[514px] pb-[100px] rounded-[5px] bg-[#080F24] px-[10px] pt-[14px]">
           <p className="pt-[25px] pl-[25p] text-[16px] leading-[23px] text-left text-[#FFFFFFE8]">
             Order Book
           </p>
 
           <div className="mt-[19px] w-full bg-[#04091C] h-full rounded-[5px]">
             <section>
-              <div className="flex justify-between pt-[16px] px-[9px]">
-                <h5 className="font-medium text-[12px] leading-[16px] flex flex-1 text-[#E4E4FA91]">
+              <div className="flex justify-between py-[16px] px-[9px]">
+                <h5 className="font-medium text-[12px]  flex flex-1 text-[#E4E4FA91]">
                   PRICE(USDT)
                 </h5>
-                <h5 className="font-medium text-[12px] leading-[16px] flex flex-1 text-[#E4E4FA91]">
+                <h5 className="font-medium text-[12px] flex flex-1 text-[#E4E4FA91]">
                   AMOUNT(BTC)
                 </h5>
-                <h5 className="font-medium text-[12px] leading-[16px] flex flex-1 text-[#E4E4FA91]">
+                <h5 className="font-medium text-[12px]  flex flex-1 text-[#E4E4FA91]">
                   TOTAL (USDT)
                 </h5>
               </div>
 
               {tableData.map((data) => (
                 <div
-                  className="flex justify-between pt-[19px] px-[9px]"
+                  className="flex h-[24px] items-center justify-between px-[9px]"
                   key={data.id}
                 >
-                  <p className="font-medium flex flex-1 text-[12px] leading-[16px] text-[#E4E4FA91]">
+                  <p className="font-medium flex flex-1 text-[12px] leading-[16px] text-[#FF8686]">
                     {data.row1}
                   </p>
                   <p className="font-medium text-[12px] flex flex-1 leading-[16px] text-[#E4E4FA91]">
@@ -158,10 +158,34 @@ const Exchange = () => {
                   </p>
                 </div>
               ))}
+
+              <div className="w-full  my-[10px] flex items-center justify-center">
+                <p className=" py-[10px] font-bold text-[14px] leading-[19px] text-white">
+                  128299.304781 USDT
+                </p>
+              </div>
+
+              {tableData.map((data) => (
+                <div
+                  className="flex h-[24px] items-center justify-between px-[9px]"
+                  key={data.id}
+                >
+                  <p className="font-medium flex flex-1 text-[12px]  text-[#1AC9A0]">
+                    {data.row1}
+                  </p>
+                  <p className="font-medium text-[12px] flex flex-1  text-[#E4E4FA91]">
+                    {data.row2}
+                  </p>
+                  <p className="font-medium text-[12px] flex flex-1  text-[#E4E4FA91]">
+                    {data.row3}
+                  </p>
+                </div>
+              ))}
             </section>
           </div>
         </section>
       </div>
+      <div className="flex justify-between w-full mt-[27px] "></div>
     </div>
   );
 };
