@@ -96,16 +96,29 @@ const Exchange = () => {
                 </div>
               </div>
             </div>
-            <div className="relative  h-[305px]">
+            <div className="relative  h-[350px]">
               <TradeViewChart
-                pair="BTCBUSD"
                 containerStyle={{
-                  maxHeight: "305px",
-                  maxWidth: "100%",
+                  minHeight: "300px",
+                  minWidth: "400px",
+                  height: "100%",
+                  width: "100%",
                   display: "flex",
                   justifyContent: "center",
-                  alignItems: "center",
                 }}
+                chartLayout={{
+                  layout: {
+                    backgroundColor: "#04091C",
+                    textColor: "#AFAFB4E8",
+                  },
+                  timeScale: {
+                    borderColor: "#485c7b",
+                    timeVisible: true,
+                    secondsVisible: false,
+                  },
+                }}
+                pair="BTCNGN"
+                interval="4h"
               />
             </div>
           </div>
