@@ -1,24 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import SideBar from "./components/side-bar";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  Dashboard,
+  Exchange,
+  Prices,
+  Promotions,
+  Notifications,
+  Activities,
+  Settings,
+  Wallets,
+} from "./pages";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <section className="App bg-[#020717] min-h-screen flex items-start max-w-[1440px] justify-center h-screen overflow-y-scroll">
+      <BrowserRouter>
+        <SideBar>
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/exchange" element={<Exchange />} />
+            <Route path="/prices" element={<Prices />} />
+            <Route path="/promotions" element={<Promotions />} />
+            <Route path="/notifications" element={<Notifications />} />
+            <Route path="/activities" element={<Activities />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/wallets" element={<Wallets />} />
+          </Routes>
+        </SideBar>
+      </BrowserRouter>
+    </section>
   );
 }
 
