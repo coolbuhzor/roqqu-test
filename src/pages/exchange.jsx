@@ -160,7 +160,7 @@ const Exchange = () => {
             </div>
           </div>
           <div className="mt-[19px] w-full bg-[#080F24] h-full rounded-[5px] px-[20px] pb-[20px]">
-            <section className="">
+            <section className="w-ful">
               <p className="font-bold text-[16px] leading-[22px] text-[#FFFFFFE8] text-left mt-[10px]">
                 Market Trades
               </p>
@@ -262,7 +262,15 @@ const Exchange = () => {
               ))}
             </section>
           </div>
-          <div className="flex justify-between w-full mt-[50px] h-[300px] border "></div>
+          <div className="flex flex-col items-center justify-between rounded-[5px] w-full mt-[50px] bg-[#080F24] h-[300px]  pb-[20px]">
+            <p className=" text-left w-full pl-[2.5%] text-[16px] text-bold pt-[15px] leading-[23px] text-[#FFFFFFE8]">
+              Place Order
+            </p>
+            <div className="h-[80%] rounded-[5px] w-[95%] bg-[#04091C]  flex flex-col items-center justify-center">
+              <p className="text-white text-bold"> Sign in or Create Account</p>
+              <p className="text-white">to Continue</p>
+            </div>
+          </div>
         </section>
       </div>
     </div>
