@@ -262,9 +262,9 @@ const Exchange = () => {
               ))}
             </section>
           </div>
+          <div className="flex justify-between w-full mt-[50px] h-[300px] border "></div>
         </section>
       </div>
-      <div className="flex justify-between w-full mt-[27px] h-[300px] border"></div>
     </div>
   );
 };
