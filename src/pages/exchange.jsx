@@ -75,8 +75,8 @@ const Exchange = () => {
 
   return (
     <div className="mt-[33px] relative w-full pl-[30px] pr-[20px] flex flex-col">
-      <div className="w-full h-[98px] bg-[#0D152E]  rounded-[8px]  grid-cols-6 grid">
-        <div className="flex items-center justify-center h-full ">
+      <div className="w-full py-[20px] lg:py-[unset] lg:h-[98px] bg-[#0D152E]  rounded-[8px]  lg:grid-cols-6 grid">
+        <div className="flex items-center pl-[20px] lg:pl-[unset] lg:justify-center h-full mb-[30px] lg:mb-[unset] ">
           <img src={btc} alt="btc-logo" className="w-[33px] mr-[9px]" />
           <div className="text-left">
             <p className="font-bold text-[16px] leading-[22px] text-[#FFFFFFE8]">
@@ -90,11 +90,11 @@ const Exchange = () => {
 
         {header.map((data) => (
           <div
-            className="h-full border-l border-[#1F2845] flex items-center justify-center"
+            className=" h-full border-l border-[#1F2845]   flex items-center pl-[20px] lg:pl-[unset] lg:justify-center"
             key={data.id}
           >
             <div className="flex flex-col ">
-              <small className="font-medium text-[12px] leading-[16px] text-[#E4E4FA91] flex self-end">
+              <small className="font-medium text-[12px] leading-[16px] text-[#E4E4FA91] flex lg:self-end">
                 {data.head}
               </small>
               <p
@@ -110,7 +110,7 @@ const Exchange = () => {
           </div>
         ))}
       </div>
-      <div className="flex justify-between w-full mt-[27px]">
+      <div className="flex flex-col lg:flex-row justify-between w-full mt-[27px]">
         <section className="w-[904px] h-full  ">
           <div className="w-full h-[486px] bg-[#080F24] rounded-tr-[10px] rounded-tl-[10px]">
             <div className="flex items-center justify-between w-full pl-[29px] pt-[28px] pr-[19px] text-[16px] leading-[23px] text-[#FFFFFFE8]">
@@ -202,7 +202,7 @@ const Exchange = () => {
             </section>
           </div>
         </section>
-        <section className="w-[350px] h-[514px] pb-[100px] rounded-[5px] bg-[#080F24] px-[10px] pt-[14px]">
+        <section className="w-[350px] h-[514px] mt-[50px] lg:mt-[unset] pb-[100px] rounded-[5px] bg-[#080F24] px-[10px] pt-[14px]">
           <p className="pt-[25px] pl-[25p] text-[16px] leading-[23px] text-left text-[#FFFFFFE8]">
             Order Book
           </p>
