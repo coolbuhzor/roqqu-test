@@ -1,44 +1,78 @@
-import React from "react";
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect, useRef, useMemo } from "react";
 import btc from "../assets/svg/btc.svg";
-import TradeViewChart from "react-crypto-chart";
+// import TradeViewChart from "react-crypto-chart";
+import useWebSocket, { ReadyState } from "react-use-websocket";
+import Chart from "../components/chart";
+
+const header = [
+  {
+    id: 1,
+    text: "18372.99 USDT",
+    head: "Last Price",
+  },
+  {
+    id: 2,
+    text: "18372.99 USDT",
+    head: "High",
+  },
+  {
+    id: 3,
+    text: "18372.99 USDT",
+    head: "Low",
+  },
+  {
+    id: 4,
+    text: "18372.99 USDT",
+    head: "Low",
+  },
+  {
+    id: 5,
+    text: "+3.04%",
+    head: "24h Change",
+  },
+];
 
 const Exchange = () => {
-  const header = [
-    {
-      id: 1,
-      text: "18372.99 USDT",
-      head: "Last Price",
-    },
-    {
-      id: 2,
-      text: "18372.99 USDT",
-      head: "High",
-    },
-    {
-      id: 3,
-      text: "18372.99 USDT",
-      head: "Low",
-    },
-    {
-      id: 4,
-      text: "18372.99 USDT",
-      head: "Low",
-    },
-    {
-      id: 5,
-      text: "+3.04%",
-      head: "24h Change",
-    },
-  ];
+  const [orderData, setOrderData] = useState([]);
+  const [tableData, setTableData] = useState([]);
 
-  const tableData = [
-    { id: 1, row1: "128299.304781", row2: "5.304781", row3: "5.304781" },
-    { id: 1, row1: "128299.304781", row2: "5.304781", row3: "5.304781" },
-    { id: 1, row1: "128299.304781", row2: "5.304781", row3: "5.304781" },
-    { id: 1, row1: "128299.304781", row2: "5.304781", row3: "5.304781" },
-    { id: 1, row1: "128299.304781", row2: "5.304781", row3: "5.304781" },
-    { id: 1, row1: "128299.304781", row2: "5.304781", row3: "5.304781" },
-  ];
+  const socketUrl = "wss://stream.binance.com:9443/ws/btcusdt@kline_1m";
+
+  const { sendJsonMessage, lastJsonMessage, readyState } =
+    useWebSocket(socketUrl);
+
+  const messageHistory = useRef([]);
+
+  messageHistory.current = useMemo(
+    () => messageHistory.current.concat(lastJsonMessage ?? []),
+    [lastJsonMessage]
+  );
+
+  const fetchData = () => {
+    fetch("https://api.binance.com/api/v3/depth?symbol=BTCUSDT", {
+      method: "GET",
+      "Content-Type": "application/json",
+    })
+      .then((response) => response.json())
+      .then((json) => setOrderData(json))
+      .catch((err) => console.log(err));
+  };
+  const fetchTableData = () => {
+    fetch("https://api.binance.com/api/v3/trades?symbol=BTCUSDT", {
+      method: "GET",
+      "Content-Type": "application/json",
+    })
+      .then((response) => response.json())
+      .then((json) => setTableData(json))
+      .catch((err) => console.log(err));
+  };
+
+  useEffect(() => {
+    fetchData();
+    fetchTableData();
+  }, [lastJsonMessage]);
+
   return (
     <div className="mt-[33px] relative w-full pl-[30px] pr-[20px] flex flex-col">
       <div className="w-full h-[98px] bg-[#0D152E]  rounded-[8px]  grid-cols-6 grid">
@@ -80,7 +114,9 @@ const Exchange = () => {
         <section className="w-[904px] h-full  ">
           <div className="w-full h-[486px] bg-[#080F24] rounded-tr-[10px] rounded-tl-[10px]">
             <div className="flex items-center justify-between w-full pl-[29px] pt-[28px] pr-[19px] text-[16px] leading-[23px] text-[#FFFFFFE8]">
-              <p>Charts</p>
+              <p className="font-bold text-[16px] leading-[22px] text-[#FFFFFFE8]">
+                Charts
+              </p>
               <div className="flex items-center justify-between">
                 <p className="bg-[#051955] text-[#FFFFFFE8] text-[14px] leading-[19px] w-[63px] h-[33px] flex items-center justify-center rounded-[5px] mr-[22px]">
                   Price
@@ -90,37 +126,80 @@ const Exchange = () => {
             </div>
 
             <div className="flex py-[16px] justify-between pl-[29px] pr-[19px] rounded-[5px]">
-              <div>
-                <div className="w-[61px] h-[42px] bg-[#21293E41] flex items-center justify-center text-[#E4E4FA]">
+              <div className="flex ">
+                <div className="w-[61px] h-[42px] bg-[#21293E41] rounded-[5px] flex items-center justify-center text-[#E4E4FA]">
+                  4h
+                </div>
+                <div className="w-[61px] h-[42px] bg-[#21293E41] ml-[10px] rounded-[5px] flex items-center justify-center text-[#E4E4FA]">
+                  4h
+                </div>
+                <div className="w-[61px] h-[42px] bg-[#21293E41] ml-[10px] rounded-[5px] flex items-center justify-center text-[#E4E4FA]">
+                  4h
+                </div>
+                <div className="w-[61px] h-[42px] bg-[#21293E41] ml-[10px] rounded-[5px] flex items-center justify-center text-[#E4E4FA]">
                   4h
                 </div>
               </div>
+              <div className="flex ">
+                <div className="w-[61px] h-[42px] bg-[#21293E41] rounded-[5px] flex items-center justify-center text-[#E4E4FA]">
+                  save
+                </div>
+                <div className="w-[61px] h-[42px] bg-[#21293E41] ml-[10px] rounded-[5px] flex items-center justify-center text-[#E4E4FA]">
+                  save
+                </div>
+                <div className="w-[61px] h-[42px] bg-[#21293E41] ml-[10px] rounded-[5px] flex items-center justify-center text-[#E4E4FA]">
+                  save
+                </div>
+                <div className="w-[61px] h-[42px] bg-[#21293E41] ml-[10px] rounded-[5px] flex items-center justify-center text-[#E4E4FA]">
+                  save
+                </div>
+              </div>
             </div>
-            <div className="relative  h-[350px]">
-              <TradeViewChart
-                containerStyle={{
-                  minHeight: "300px",
-                  minWidth: "400px",
-                  height: "100%",
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                }}
-                chartLayout={{
-                  layout: {
-                    backgroundColor: "#04091C",
-                    textColor: "#AFAFB4E8",
-                  },
-                  timeScale: {
-                    borderColor: "#485c7b",
-                    timeVisible: true,
-                    secondsVisible: false,
-                  },
-                }}
-                pair="BTCNGN"
-                interval="4h"
-              />
+            <div className="relative  h-[500px] w-full overflow-x-scroll">
+              <Chart data={messageHistory} />
             </div>
+          </div>
+          <div className="mt-[19px] w-full bg-[#080F24] h-full rounded-[5px] px-[20px] pb-[20px]">
+            <section className="">
+              <p className="font-bold text-[16px] leading-[22px] text-[#FFFFFFE8] text-left mt-[10px]">
+                Market Trades
+              </p>
+              <div className="flex justify-between py-[16px] px-[9px]">
+                <h5 className="font-medium text-[12px]  flex flex-1 text-[#E4E4FA91]">
+                  TIME
+                </h5>
+                <h5 className="font-medium text-[12px]  flex flex-1 text-[#E4E4FA91]">
+                  PRICE(USDT)
+                </h5>
+                <h5 className="font-medium text-[12px] flex flex-1 text-[#E4E4FA91]">
+                  AMOUNT(BTC)
+                </h5>
+                <h5 className="font-medium text-[12px]  flex flex-1 text-[#E4E4FA91]">
+                  TOTAL (USDT)
+                </h5>
+              </div>
+              <div className="rounded-[5px]  bg-[#04091C] h-[400px] overflow-y-scroll">
+                {tableData.map((data, index) => (
+                  <div
+                    className="flex h-[24px] items-center justify-between px-[9px]  "
+                    key={data.id}
+                  >
+                    <p className="font-medium flex flex-1 text-[12px] leading-[16px] text-[#FFFFFFE8]">
+                      {new Date(data.time).toLocaleTimeString()}
+                    </p>
+                    <p className="font-medium flex flex-1 text-[12px] leading-[16px] text-[#FF8686]">
+                      {data.price}
+                    </p>
+                    <p className="font-medium text-[12px] flex flex-1 leading-[16px] text-[#FFFFFFE8]">
+                      {data.qty}
+                    </p>
+                    <p className="font-medium text-[12px] flex flex-1 leading-[16px] text-[#FFFFFFE8]">
+                      {data.quoteQty}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </section>
           </div>
         </section>
         <section className="w-[350px] h-[514px] pb-[100px] rounded-[5px] bg-[#080F24] px-[10px] pt-[14px]">
@@ -134,7 +213,7 @@ const Exchange = () => {
                 <h5 className="font-medium text-[12px]  flex flex-1 text-[#E4E4FA91]">
                   PRICE(USDT)
                 </h5>
-                <h5 className="font-medium text-[12px] flex flex-1 text-[#E4E4FA91]">
+                <h5 className="font-medium text-[12px] ml-[10px] flex flex-1 text-[#E4E4FA91]">
                   AMOUNT(BTC)
                 </h5>
                 <h5 className="font-medium text-[12px]  flex flex-1 text-[#E4E4FA91]">
@@ -142,42 +221,42 @@ const Exchange = () => {
                 </h5>
               </div>
 
-              {tableData.map((data) => (
+              {orderData?.asks?.slice(0, 6).map((data, index) => (
                 <div
                   className="flex h-[24px] items-center justify-between px-[9px]"
-                  key={data.id}
+                  key={`${index}`}
                 >
                   <p className="font-medium flex flex-1 text-[12px] leading-[16px] text-[#FF8686]">
-                    {data.row1}
+                    {data[0]}
+                  </p>
+                  <p className="font-medium text-[12px] flex flex-1 leading-[16px] ml-[10px] text-[#E4E4FA91]">
+                    {data[1]}
                   </p>
                   <p className="font-medium text-[12px] flex flex-1 leading-[16px] text-[#E4E4FA91]">
-                    {data.row2}
-                  </p>
-                  <p className="font-medium text-[12px] flex flex-1 leading-[16px] text-[#E4E4FA91]">
-                    {data.row3}
+                    {data[1]}
                   </p>
                 </div>
               ))}
 
               <div className="w-full  my-[10px] flex items-center justify-center">
                 <p className=" py-[10px] font-bold text-[14px] leading-[19px] text-white">
-                  128299.304781 USDT
+                  {orderData?.asks?.slice(0, 1)[0][0]}
                 </p>
               </div>
 
-              {tableData.map((data) => (
+              {orderData?.bids?.slice(0, 6).map((data, index) => (
                 <div
                   className="flex h-[24px] items-center justify-between px-[9px]"
-                  key={data.id}
+                  key={`${index}`}
                 >
                   <p className="font-medium flex flex-1 text-[12px]  text-[#1AC9A0]">
-                    {data.row1}
+                    {data[0]}
+                  </p>
+                  <p className="font-medium text-[12px] flex flex-1 ml-[10px]  text-[#E4E4FA91]">
+                    {data[1]}
                   </p>
                   <p className="font-medium text-[12px] flex flex-1  text-[#E4E4FA91]">
-                    {data.row2}
-                  </p>
-                  <p className="font-medium text-[12px] flex flex-1  text-[#E4E4FA91]">
-                    {data.row3}
+                    {data[1]}
                   </p>
                 </div>
               ))}
@@ -185,7 +264,7 @@ const Exchange = () => {
           </div>
         </section>
       </div>
-      <div className="flex justify-between w-full mt-[27px] "></div>
+      <div className="flex justify-between w-full mt-[27px] h-[300px] border"></div>
     </div>
   );
 };
